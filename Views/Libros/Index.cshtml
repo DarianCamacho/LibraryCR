@@ -1,0 +1,45 @@
+﻿@model IEnumerable<LibraryCR.Models.Libros>
+
+@{
+    ViewBag.Title = "Libros";
+}
+
+<h2>Libros</h2>
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginForm("Index", "Libros", FormMethod.Get))
+        {
+            <div class="input-group">
+                @Html.TextBox("searchString", null, new { @class = "form-control", placeholder = "Buscar..." })
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit">Buscar</button>
+                </span>
+            </div>
+        }
+    </div>
+    <div class="col-md-6 text-right">
+        @Html.ActionLink("Agregar Libro", "Create", null, new { @class = "btn btn-success" })
+    </div>
+</div>
+<hr />
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <img class="card-img-top" src="@item.Foto" alt="Imagen de portada">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Titulo</h5>
+                    <p class="card-text">@item.Autor</p>
+                    <p class="card-text">Publicado en: @item.FechaPublicacion</p>
+                    <p class="card-text">Precio: @item.Precio</p>
+                    <div class="text-center">
+                        @Html.ActionLink("Detalles", "Details", new { id = item.ISBN }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Editar", "Edit", new { id = item.ISBN }, new { @class = "btn btn-secondary" })
+                        @Html.ActionLink("Eliminar", "Delete", new { id = item.ISBN }, new { @class = "btn btn-danger", onclick = "return confirm('¿Está seguro que desea eliminar este libro?')" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
